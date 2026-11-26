@@ -1,0 +1,104 @@
+.projects { display: grid; gap: clamp(32px, 5vw, 64px); }
+
+/* Cards start leaning back and stand up as they scroll in. */
+.project-stage { perspective: 1400px; }
+.project {
+  transform-origin: center bottom;
+  transform:
+    rotateX(calc((1 - var(--progress, 1)) * 24deg))
+    scale(calc(0.9 + var(--progress, 1) * 0.1));
+}
+.project__card {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(20px, 3vw, 40px);
+  align-items: center;
+  padding: clamp(14px, 2vw, 24px);
+  border-radius: var(--radius-lg);
+}
+/* No backdrop blur here, so the preview can pop out in 3D. */
+.project__card.glass { -webkit-backdrop-filter: none; backdrop-filter: none; }
+.project-stage:nth-child(even) .project__visual { order: 2; }
+.project__visual { min-width: 0; transform: translateZ(28px); transform-style: preserve-3d; }
+.project__body { min-width: 0; padding: 0.5rem; }
+.project__body h3 { font-size: clamp(1.6rem, 1.3rem + 1vw, 2.2rem); margin-bottom: 0.4rem; }
+.project__category { margin-bottom: 0.2rem; color: var(--accent-text); font-size: 0.85rem; font-weight: 600; }
+.project__body .actions { margin-block: 1.5rem 0; }
+.note { color: var(--muted); font-size: 0.82rem; }
+
+/* Preview area */
+.preview {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: linear-gradient(140deg, #1d4ed8, #0b1740 75%);
+}
+.preview img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+.project__card:hover .preview img { transform: scale(1.03); }
+
+.mock { perspective: 900px; }
+.mock__window {
+  position: absolute;
+  inset: 12% 10% 16%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.6);
+  transform: rotateX(12deg) rotateY(-16deg);
+  transition: transform 0.7s var(--ease);
+}
+.project__card:hover .mock__window { transform: rotateX(0) rotateY(0) scale(1.03); }
+.mock__top { display: flex; gap: 5px; margin-bottom: 10px; }
+.mock__top i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); }
+.mock__body { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 1.4fr 1fr; gap: 8px; }
+.mock__body b { border-radius: 9px; background: rgba(255, 255, 255, 0.2); }
+.mock__body .mock__hero { grid-column: 1 / -1; background: linear-gradient(110deg, rgba(147, 197, 253, 0.85), rgba(255, 255, 255, 0.2)); }
+.mock--dashboard .mock__body { grid-template-columns: 0.6fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
+.mock--dashboard .mock__body .mock__hero { grid-column: 1; grid-row: 1 / -1; }
+.mock--dashboard .mock__body b:nth-child(4) { grid-column: 2 / -1; }
+.mock--store .mock__body { grid-template-rows: 0.7fr 1.5fr; }
+.mock--store .mock__body b:not(.mock__hero) { border-radius: 40px 40px 9px 9px; }
+.mock__float {
+  position: absolute;
+  right: 5%;
+  bottom: 14%;
+  width: 24%;
+  aspect-ratio: 1.3;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.18);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 18px 30px -12px rgba(0, 0, 0, 0.55);
+  transition: transform 0.7s var(--ease);
+}
+.project__card:hover .mock__float { transform: translate(6px, -16px) rotate(6deg); }
+.mock__note { position: absolute; bottom: 10px; left: 14px; color: #fff; font-size: 0.72rem; }
+
+/* Details dialog */
+.modal {
+  width: min(720px, 100% - 32px);
+  max-height: min(88vh, 900px);
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text-soft);
+  box-shadow: var(--glass-shadow);
+}
+.modal[open] { animation: modal-in 0.45s var(--ease); }
+@keyframes modal-in { from { opacity: 0; transform: perspective(900px) rotateX(16deg) translateY(40px); } }
+.modal::backdrop { background: rgba(4, 10, 28, 0.65); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.modal__panel { padding: clamp(18px, 4vw, 36px); }
+.modal__panel .preview { margin-bottom: 1.5rem; aspect-ratio: 16 / 9; }
+.modal__close { position: sticky; z-index: 2; top: 12px; float: right; margin: 0 0 12px 12px; }
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.35rem 1rem; padding-left: 1.1rem; list-style: disc; }
+
+@media (max-width: 900px) {
+  .project__card { grid-template-columns: 1fr; }
+  .project-stage:nth-child(even) .project__visual { order: 0; }
+}

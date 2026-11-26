@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Al Amin | Frontend Developer Portfolio</title>
+    <meta name="description" content="Explore the portfolio of Al Amin, a Frontend Developer focused on React.js, JavaScript, TypeScript, and modern responsive web development." />
+    <meta name="keywords" content="Al Amin, Frontend Developer, React Developer, JavaScript Developer, React Portfolio, Web Developer Bangladesh" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Al Amin | Frontend Developer Portfolio" />
+    <meta property="og:description" content="Frontend Developer building modern, responsive web experiences." />
+    <meta property="og:image" content="/og-image.png" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
+    <script>
+      // Apply the saved theme before first paint to avoid a flash.
+      try {
+        var saved = localStorage.getItem('theme');
+        var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        document.documentElement.dataset.theme = saved || (prefersLight ? 'light' : 'dark');
+      } catch (e) {
+        document.documentElement.dataset.theme = 'dark';
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

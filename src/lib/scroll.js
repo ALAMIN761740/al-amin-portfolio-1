@@ -1,0 +1,9 @@
+export function scrollToSection(event, id) {
+  event?.preventDefault();
+  const target = document.getElementById(id);
+  if (!target) return;
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+  target.focus({ preventScroll: true });
+}
